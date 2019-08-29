@@ -36,6 +36,9 @@ public class TriggerCallbackThread {
     public static void pushCallBack(HandleCallbackParam callback){
         getInstance().callBackQueue.add(callback);
         logger.debug(">>>>>>>>>>> xxl-job, push callback request, logId:{}", callback.getLogId());
+        if (logger.isInfoEnabled()) {
+            logger.info(">>>>>>>>>>> callback queue items {}", getInstance().callBackQueue);
+        }
     }
 
     /**
@@ -80,6 +83,9 @@ public class TriggerCallbackThread {
                         }
                     }
                 }
+                if (logger.isInfoEnabled()) {
+                    logger.info("after stop callback queue size {}", callBackQueue.size());
+                }
 
                 // last callback
                 try {
@@ -92,6 +98,9 @@ public class TriggerCallbackThread {
                     if (!toStop) {
                         logger.error(e.getMessage(), e);
                     }
+                }
+                if (logger.isInfoEnabled()) {
+                    logger.info("after last callback queue size {}", callBackQueue.size());
                 }
                 logger.info(">>>>>>>>>>> xxl-job, executor callback thread destory.");
 
